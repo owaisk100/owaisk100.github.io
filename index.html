@@ -312,6 +312,22 @@
   .visit:hover, .visit:focus-visible { color: var(--accent-strong); }
   .visit svg { width: .8em; height: .8em; }
 
+  .shot {
+    margin-top: 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9.5;
+    object-fit: cover;
+    object-position: top;
+  }
+
   /* ---------- footer ---------- */
 
   footer {
@@ -421,6 +437,7 @@
         <ul class="stack">
           <li>Next.js 16</li><li>Payload CMS</li><li>PostgreSQL (RLS)</li><li>Claude</li><li>MinIO / S3</li>
         </ul>
+        <div class="shot"><img src="assets/marketing-studio.png" alt="Marketing Studio dashboard showing content awaiting approval, this week's send schedule, and active campaigns for a client organization" loading="lazy" decoding="async"></div>
       </div>
     </article>
 
@@ -436,6 +453,7 @@
         <ul class="stack">
           <li>Python</li><li>FastAPI</li><li>SQLite</li><li>Alpaca API</li><li>TOTP 2FA</li>
         </ul>
+        <div class="shot"><img src="assets/trading-bot.png" alt="Halal Trading Bot dashboard showing nine watched tickers with live RSI, MACD, VWAP, and halal-compliance status" loading="lazy" decoding="async"></div>
       </div>
     </article>
   </main>
