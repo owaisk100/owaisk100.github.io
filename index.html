@@ -312,21 +312,75 @@
   .visit:hover, .visit:focus-visible { color: var(--accent-strong); }
   .visit svg { width: .8em; height: .8em; }
 
-  .shot {
+  .shots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
     margin-top: 1.1rem;
+  }
+
+  .shot-thumb {
+    padding: 0;
     border: 1px solid var(--line-strong);
     border-radius: 6px;
     overflow: hidden;
     background: var(--surface);
+    cursor: zoom-in;
+    width: 148px;
+    height: 92px;
+    flex: 0 0 auto;
+    font: inherit;
   }
-  .shot img {
+  .shot-thumb img {
     display: block;
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9.5;
+    height: 100%;
     object-fit: cover;
     object-position: top;
   }
+  .shot-thumb:hover { border-color: var(--accent); }
+  .shot-thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .shot-note {
+    margin: .6rem 0 0;
+    font-size: .82rem;
+    color: var(--ink-faint);
+    max-width: 62ch;
+  }
+
+  dialog.lightbox {
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    max-width: 92vw;
+    max-height: 92vh;
+  }
+  dialog.lightbox::backdrop { background: rgba(10, 10, 8, .78); }
+  dialog.lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 92vh;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+  }
+  dialog.lightbox .lightbox-close {
+    position: absolute;
+    top: .6rem;
+    right: .6rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(20, 20, 16, .65);
+    color: #f3f1e5;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  dialog.lightbox .lightbox-close:hover { background: rgba(20, 20, 16, .85); }
 
   /* ---------- footer ---------- */
 
@@ -437,7 +491,9 @@
         <ul class="stack">
           <li>Next.js 16</li><li>Payload CMS</li><li>PostgreSQL (RLS)</li><li>Claude</li><li>MinIO / S3</li>
         </ul>
-        <div class="shot"><img src="assets/marketing-studio.png" alt="Marketing Studio dashboard showing content awaiting approval, this week's send schedule, and active campaigns for a client organization" loading="lazy" decoding="async"></div>
+        <div class="shots">
+          <button type="button" class="shot-thumb"><img src="assets/marketing-studio.png" alt="Marketing Studio dashboard showing content awaiting approval, this week's send schedule, and active campaigns for a client organization" loading="lazy" decoding="async"></button>
+        </div>
       </div>
     </article>
 
@@ -453,7 +509,9 @@
         <ul class="stack">
           <li>Python</li><li>FastAPI</li><li>SQLite</li><li>Alpaca API</li><li>TOTP 2FA</li>
         </ul>
-        <div class="shot"><img src="assets/trading-bot.png" alt="Halal Trading Bot dashboard showing nine watched tickers with live RSI, MACD, VWAP, and halal-compliance status" loading="lazy" decoding="async"></div>
+        <div class="shots">
+          <button type="button" class="shot-thumb"><img src="assets/trading-bot.png" alt="Halal Trading Bot dashboard showing nine watched tickers with live RSI, MACD, VWAP, and halal-compliance status" loading="lazy" decoding="async"></button>
+        </div>
       </div>
     </article>
 
@@ -469,6 +527,12 @@
         <ul class="stack">
           <li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>React</li><li>PWA</li><li>Telegram</li>
         </ul>
+        <div class="shots">
+          <button type="button" class="shot-thumb"><img src="assets/ethical-trading-dashboard.png" alt="Ethical Trading 2.0 dashboard showing account value, the engine's current strategy rules, and today's automated activity" loading="lazy" decoding="async"></button>
+          <button type="button" class="shot-thumb"><img src="assets/ethical-trading-watchlist.png" alt="Ethical Trading 2.0 watchlist with live RSI, MACD, and signal data across 13 tracked tickers" loading="lazy" decoding="async"></button>
+          <button type="button" class="shot-thumb"><img src="assets/ethical-trading-analytics.png" alt="Ethical Trading 2.0 analytics page showing realised P&amp;L and win rate from closed paper trades" loading="lazy" decoding="async"></button>
+        </div>
+        <p class="shot-note">Analytics shown is from active testing against a mix of market conditions, including deliberately adverse ones — the negative P&amp;L reflects those test scenarios, not expected real-world performance.</p>
       </div>
     </article>
   </main>
@@ -478,6 +542,31 @@
     <a href="mailto:owais.kj@gmail.com">owais.kj@gmail.com</a>
   </footer>
 </div>
+
+<dialog class="lightbox" id="lightbox">
+  <button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+  <img alt="">
+</dialog>
+<script>
+  (function () {
+    var dialog = document.getElementById('lightbox');
+    var lightboxImg = dialog.querySelector('img');
+    document.querySelectorAll('.shot-thumb').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var img = btn.querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        dialog.showModal();
+      });
+    });
+    dialog.querySelector('.lightbox-close').addEventListener('click', function () {
+      dialog.close();
+    });
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) dialog.close();
+    });
+  })();
+</script>
 
 </body>
 </html>
